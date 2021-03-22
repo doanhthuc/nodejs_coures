@@ -1,11 +1,19 @@
+const Course = require('../models/Course');
+
 class SiteController {
-    index(req, res) {
-        res.render('news');
+    async index(req, res, next) {
+        try {
+            const courses = await Course.find({}).lean();
+            res.render('home', { courses });
+        } catch (error) {
+            next(error);
+        }
+        // res.render('home');
     }
 
     // [GET] /search/:slug
     search(req, res) {
-        res.send('search Detail');
+        res.render('search');
     }
 }
 
